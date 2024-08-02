@@ -3,43 +3,50 @@ package com.example.noteapp
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.noteapp.databinding.ActivityMainBinding
-import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
-    private lateinit var splashScreen: SplashScreen
-
-    private var currentImgIndex = 0
-    private val imgResources = arrayOf(R.drawable.visible_pwd, R.drawable.invisible_pwd)
+    private var isVisiblePassword = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        splashScreen = installSplashScreen()
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.visibilityPasswordBtn.setImageResource(imgResources[currentImgIndex])
+        setUpPasswordVisibilityBtn()
+    }
+
+    private fun setUpPasswordVisibilityBtn() {
+        // before click isVisiblePassword = false
+        // first click isVisiblePassword = true
+        // second click isVisiblePassword = false
+        // next click isVisiblePassword = true
+        // ....
         binding.visibilityPasswordBtn.setOnClickListener {
-            // click first time -> (0 + 1) % 2 du 1
-            // click next time -> (1 + 1) % 2 du 0
-            // click next time -> (0 + 1) % 2 du 1
-            // click next time -> (1 + 1) % 2 du 0
-            // ....
-            currentImgIndex = (currentImgIndex + 1) % imgResources.size
-            Log.d("currentImgIndex after click", currentImgIndex.toString())
-            binding.visibilityPasswordBtn.setImageResource(imgResources[currentImgIndex])
-            binding.editPassword.inputType = if (currentImgIndex == 1) {
-                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            } else {
-                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            }
+            isVisiblePassword = !isVisiblePassword
+//            Log.d("isVisiblePassword", isVisiblePassword.toString())
+            setUpPasswordVisibilityText()
         }
+    }
+
+    private fun setUpPasswordVisibilityText() {
+        val imageResource = if (isVisiblePassword) {
+            R.drawable.visible_pwd
+        } else {
+            R.drawable.invisible_pwd
+        }
+        binding.visibilityPasswordBtn.setImageResource(imageResource)
+
+        val inputType = if (isVisiblePassword) {
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        } else {
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        binding.editPassword.inputType = inputType
     }
 }
