@@ -1,6 +1,7 @@
 package com.example.noteapp
 
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,11 @@ class MainActivity : AppCompatActivity() {
             currentImgIndex = (currentImgIndex + 1) % imgResources.size
             Log.d("currentImgIndex after click", currentImgIndex.toString())
             binding.visibilityPasswordBtn.setImageResource(imgResources[currentImgIndex])
+            binding.editPassword.inputType = if (currentImgIndex == 1) {
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
         }
     }
 }
