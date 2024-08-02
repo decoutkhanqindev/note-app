@@ -2,7 +2,6 @@ package com.example.noteapp
 
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.noteapp.databinding.ActivityMainBinding
@@ -42,11 +41,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.visibilityPasswordBtn.setImageResource(imageResource)
 
-        val inputType = if (isVisiblePassword) {
+        binding.editPassword.inputType = if (isVisiblePassword) {
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         } else {
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         }
-        binding.editPassword.inputType = inputType
     }
 }
