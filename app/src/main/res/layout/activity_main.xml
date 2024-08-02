@@ -81,7 +81,7 @@
             tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck,VisualLintBounds" />
 
         <ImageView
-            android:id="@+id/visiblePasswordLogin"
+            android:id="@+id/visibilityPasswordLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="317dp"
