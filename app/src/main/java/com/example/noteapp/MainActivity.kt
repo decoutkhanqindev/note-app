@@ -24,13 +24,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.visibilityPasswordLogin.setImageResource(imgResources[currentImgIndex])
-        binding.visibilityPasswordLogin.setOnClickListener {
-            // (0 + 1) % 2 du 1
-            // (1 + 1) % 2 du 0
+        binding.visibilityPasswordBtn.setImageResource(imgResources[currentImgIndex])
+        binding.visibilityPasswordBtn.setOnClickListener {
+            // click first time -> (0 + 1) % 2 du 1
+            // click next time -> (1 + 1) % 2 du 0
+            // click next time -> (0 + 1) % 2 du 1
+            // click next time -> (1 + 1) % 2 du 0
+            // ....
             currentImgIndex = (currentImgIndex + 1) % imgResources.size
             Log.d("currentImgIndex after click", currentImgIndex.toString())
-            binding.visibilityPasswordLogin.setImageResource(imgResources[currentImgIndex])
+            binding.visibilityPasswordBtn.setImageResource(imgResources[currentImgIndex])
         }
     }
 }
