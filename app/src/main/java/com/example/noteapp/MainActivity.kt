@@ -12,9 +12,16 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
     private val passwordHelper by lazy(LazyThreadSafetyMode.NONE) {
         PasswordHelper()
     }
+
+    private var isLoginBtnVisible: Boolean
+        get() = binding.loginBtn.visibility == View.VISIBLE
+        set(value) {
+            binding.loginBtn.visibility = if (value) View.VISIBLE else View.GONE
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -27,13 +34,11 @@ class MainActivity : AppCompatActivity() {
                 replace(binding.fragmentContainerView.id, SignUpFragment())
                 addToBackStack(null)
             }
-            binding.loginBtn.visibility = View.GONE
+            isLoginBtnVisible = false
         }
 
         supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount == 0) {
-                binding.loginBtn.visibility = View.VISIBLE
-            }
+            isLoginBtnVisible = supportFragmentManager.backStackEntryCount == 0
         }
 
         passwordHelper.setUpPasswordVisibilityBtn(

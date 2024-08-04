@@ -10,6 +10,7 @@ import com.example.noteapp.utils.PasswordHelper
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
+
     private val passwordHelper by lazy(LazyThreadSafetyMode.NONE) {
         PasswordHelper()
     }
