@@ -2,11 +2,12 @@ package com.example.noteapp
 
 import android.os.Bundle
 import android.text.InputType
-import android.widget.EditText
+import android.view.View
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.fragment.app.commit
 import com.example.noteapp.databinding.ActivityMainBinding
-import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
@@ -18,6 +19,14 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.signUpBtn.setOnClickListener {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                replace(binding.fragmentContainerView.id, SignUpFragment())
+                addToBackStack(null)
+            }
+        }
 
         setUpPasswordVisibilityBtn()
     }
