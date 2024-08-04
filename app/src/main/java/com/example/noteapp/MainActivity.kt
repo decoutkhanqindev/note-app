@@ -7,12 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.commit
 import com.example.noteapp.databinding.ActivityMainBinding
+import com.example.noteapp.utils.PasswordHelper
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private var isVisiblePassword = false
+    private lateinit var passwordHelper: PasswordHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -29,39 +30,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         supportFragmentManager.addOnBackStackChangedListener {
-            if(supportFragmentManager.backStackEntryCount == 0) {
+            if (supportFragmentManager.backStackEntryCount == 0) {
                 binding.loginBtn.visibility = View.VISIBLE
             }
         }
 
-        setUpPasswordVisibilityBtn()
-    }
-
-    private fun setUpPasswordVisibilityBtn() {
-        // before click isVisiblePassword = false
-        // first click isVisiblePassword = true
-        // second click isVisiblePassword = false
-        // next click isVisiblePassword = true
-        // ....
-        binding.visibilityPasswordBtn.setOnClickListener {
-            isVisiblePassword = !isVisiblePassword
-//            Log.d("isVisiblePassword", isVisiblePassword.toString())
-            setUpPasswordVisibilityText()
-        }
-    }
-
-    private fun setUpPasswordVisibilityText() {
-        val imageResource = if (isVisiblePassword) {
-            R.drawable.visible_pwd
-        } else {
-            R.drawable.invisible_pwd
-        }
-        binding.visibilityPasswordBtn.setImageResource(imageResource)
-
-        binding.editPassword.inputType = if (isVisiblePassword) {
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        } else {
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        }
+        passwordHelper.setUpPasswordVisibilityBtn(
+            binding.visibilityPasswordBtn, binding.editPassword
+        )
     }
 }
