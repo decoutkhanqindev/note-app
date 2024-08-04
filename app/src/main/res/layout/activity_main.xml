@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/editUsernameLayout"
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TextSizeCheck" />
+        tools:ignore="TextSizeCheck,VisualLintOverlap" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editUsernameLayout"
@@ -102,10 +102,9 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/editPasswordLayout"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editPasswordLayout"
         app:layout_constraintTop_toBottomOf="@+id/editPasswordLayout"
-        tools:ignore="SpUsage,TextSizeCheck,VisualLintBounds,VisualLintButtonSize" />
+        tools:ignore="VisualLintButtonSize,VisualLintOverlap" />
 
     <TextView
         android:id="@+id/signUpText"
@@ -123,7 +122,7 @@
         app:layout_constraintStart_toStartOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TextContrastCheck,TextSizeCheck,VisualLintBounds" />
+        tools:ignore="TextContrastCheck,TextSizeCheck,VisualLintBounds,VisualLintOverlap" />
 
     <TextView
         android:id="@+id/signUpBtn"
@@ -138,6 +137,11 @@
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
         app:layout_constraintTop_toTopOf="@+id/signUpText"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="RelativeOverlap,TextContrastCheck,VisualLintBounds" />
+        tools:ignore="RelativeOverlap,TextContrastCheck,VisualLintBounds,VisualLintOverlap" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_sign_up" />
 </androidx.constraintlayout.widget.ConstraintLayout>
