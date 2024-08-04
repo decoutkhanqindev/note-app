@@ -3,7 +3,6 @@ package com.example.noteapp
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.commit
@@ -25,6 +24,13 @@ class MainActivity : AppCompatActivity() {
                 setReorderingAllowed(true)
                 replace(binding.fragmentContainerView.id, SignUpFragment())
                 addToBackStack(null)
+            }
+            binding.loginBtn.visibility = View.GONE
+        }
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if(supportFragmentManager.backStackEntryCount == 0) {
+                binding.loginBtn.visibility = View.VISIBLE
             }
         }
 
