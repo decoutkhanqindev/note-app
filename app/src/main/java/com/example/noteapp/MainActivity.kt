@@ -13,7 +13,9 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private lateinit var passwordHelper: PasswordHelper
+    private val passwordHelper by lazy(LazyThreadSafetyMode.NONE) {
+        PasswordHelper()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()

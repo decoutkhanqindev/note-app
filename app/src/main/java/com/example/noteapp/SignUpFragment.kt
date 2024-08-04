@@ -10,7 +10,9 @@ import com.example.noteapp.utils.PasswordHelper
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
-    private lateinit var passwordHelper: PasswordHelper
+    private val passwordHelper by lazy(LazyThreadSafetyMode.NONE) {
+        PasswordHelper()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
