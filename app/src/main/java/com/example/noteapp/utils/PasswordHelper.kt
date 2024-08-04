@@ -6,22 +6,23 @@ import android.widget.ImageView
 import com.example.noteapp.R
 
 class PasswordHelper {
-    private var isVisiblePassword = false
+//    before click isVisiblePassword = false
+//    first click isVisiblePassword = true
+//    second click isVisiblePassword = false
+//    next click isVisiblePassword = true
+//    ....
 
     fun setUpPasswordVisibilityBtn(button: ImageView, editText: EditText) {
-        // before click isVisiblePassword = false
-        // first click isVisiblePassword = true
-        // second click isVisiblePassword = false
-        // next click isVisiblePassword = true
-        // ....
+        var isVisiblePassword = false
         button.setOnClickListener {
             isVisiblePassword = !isVisiblePassword
-//            Log.d("isVisiblePassword", isVisiblePassword.toString())
-            setUpPasswordVisibilityText(button, editText)
+            setUpPasswordVisibilityText(button, editText, isVisiblePassword)
         }
     }
 
-    private fun setUpPasswordVisibilityText(button: ImageView, editText: EditText) {
+    private fun setUpPasswordVisibilityText(
+        button: ImageView, editText: EditText, isVisiblePassword: Boolean
+    ) {
         val imageResource = if (isVisiblePassword) {
             R.drawable.visible_pwd
         } else {
