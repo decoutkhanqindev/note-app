@@ -77,7 +77,7 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/adlam_display"
             android:importantForAutofill="no"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:textStyle="normal"
             tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -108,7 +108,7 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/adlam_display"
             android:importantForAutofill="no"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:textStyle="normal"
             tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
