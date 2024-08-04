@@ -3,7 +3,13 @@
     <string name="title_login">Welcome\nback</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm password</string>
     <string name="login_btn">Login</string>
     <string name="sign_up_text">Don\'t have an account?</string>
     <string name="sign_up_btn">Sign up</string>
+    <string name="title_signup">Create\naccount</string>
+    <string name="create_account_btn">Create account</string>
+    <string name="sign_in_text">Already have an account?</string>
+    <string name="sign_in_btn">Sign in</string>
+
 </resources>
