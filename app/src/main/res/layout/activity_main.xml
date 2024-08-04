@@ -21,122 +21,122 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="158dp"
-        android:layout_height="94dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:fontFamily="@font/adlam_display"
         android:text="@string/title_login"
         android:textColor="@color/color_font"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editUsername"
+        app:layout_constraintBottom_toTopOf="@+id/editUsernameLayout"
         app:layout_constraintEnd_toStartOf="@+id/logo"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editUsername"
+        app:layout_constraintStart_toStartOf="@+id/editUsernameLayout"
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="TextSizeCheck" />
 
-    <EditText
-        android:id="@+id/editUsername"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editUsernameLayout"
         android:layout_width="341dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="184dp"
-        android:fontFamily="@font/adlam_display"
         android:hint="@string/hint_username"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="@+id/logo"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@id/logo"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/adlam_display"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textStyle="normal"
+            tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editPasswordLayout"
         android:layout_width="341dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/editUsername"
-        app:layout_constraintStart_toStartOf="@+id/editUsername"
-        app:layout_constraintTop_toBottomOf="@+id/editUsername"
-        tools:ignore="UselessLeaf">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="@string/hint_password"
+        app:layout_constraintEnd_toEndOf="@+id/editUsernameLayout"
+        app:layout_constraintStart_toStartOf="@+id/editUsernameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/editUsernameLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
             android:fontFamily="@font/adlam_display"
-            android:hint="@string/hint_password"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:textStyle="normal"
             tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck,VisualLintBounds" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/visibilityPasswordBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="317dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/visible_pwd"
-            tools:ignore="ImageContrastCheck" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/visibilityPasswordBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="317dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/visible_pwd"
+        app:layout_constraintBottom_toBottomOf="@+id/editPasswordLayout"
+        app:layout_constraintEnd_toEndOf="@+id/editPasswordLayout"
+        app:layout_constraintTop_toTopOf="@+id/editPasswordLayout"
+        tools:ignore="ImageContrastCheck" />
 
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="341dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:backgroundTint="@color/splash_bg"
         android:fontFamily="@font/adlam_display"
         android:text="@string/login_btn"
         android:textColor="@color/white"
+        android:textSize="16dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="@+id/editPasswordLayout"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        tools:ignore="VisualLintButtonSize,VisualLintBounds" />
+        app:layout_constraintStart_toStartOf="@+id/editPasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/editPasswordLayout"
+        tools:ignore="SpUsage,TextSizeCheck,VisualLintBounds,VisualLintButtonSize" />
 
-    <LinearLayout
-        android:layout_width="341dp"
+    <TextView
+        android:id="@+id/signUpText"
+        android:layout_width="wrap_content"
         android:layout_height="23dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/adlam_display"
+        android:text="@string/sign_up_text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/signUpBtn"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn"
-        tools:ignore="TextSizeCheck,VisualLintBounds">
+        tools:ignore="TextContrastCheck,TextSizeCheck" />
 
-        <TextView
-            android:id="@+id/signUpText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/adlam_display"
-            android:text="@string/sign_up_text"
-            android:textSize="16sp"
-            tools:ignore="TextContrastCheck" />
-
-        <TextView
-            android:id="@+id/signUpBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/adlam_display"
-            android:text="@string/sign_up_btn"
-            android:textColor="@color/splash_bg"
-            android:textSize="16sp"
-            tools:ignore="RelativeOverlap,TextContrastCheck" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/signUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:fontFamily="@font/adlam_display"
+        android:text="@string/sign_up_btn"
+        android:textColor="@color/splash_bg"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/signUpText"
+        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintTop_toTopOf="@+id/signUpText"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="RelativeOverlap,TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
