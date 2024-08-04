@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.fragment.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
