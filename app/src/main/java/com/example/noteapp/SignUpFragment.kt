@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
 import com.example.noteapp.databinding.FragmentSignUpBinding
 import com.example.noteapp.utils.PasswordHelper
 
@@ -30,5 +31,9 @@ class SignUpFragment : Fragment() {
         passwordHelper.setUpPasswordVisibilityBtn(
             binding.visibilityPasswordBtn2, binding.editConfirmPassword
         )
+
+        binding.backBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 }
