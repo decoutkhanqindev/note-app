@@ -1,7 +1,10 @@
 package com.example.noteapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.commit
@@ -44,5 +47,11 @@ class MainActivity : AppCompatActivity() {
         passwordHelper.setUpPasswordVisibilityBtn(
             binding.visibilityPasswordBtn, binding.editPassword
         )
+
+        binding.loginBtn.setOnClickListener {
+            if (binding.editUsername.text!!.isNotEmpty() && binding.editPassword.text!!.isNotEmpty()) {
+                startActivity(Intent(this, AllNotesActivity::class.java))
+            }
+        }
     }
 }
