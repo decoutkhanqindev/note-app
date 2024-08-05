@@ -31,7 +31,6 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         fun bind(note: Note) {
             binding.run {
                 titleNote.text = note.title
-                titleImg.setImageResource(note.img)
                 descriptionNote.text = note.description
             }
         }
