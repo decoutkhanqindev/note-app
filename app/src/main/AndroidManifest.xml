@@ -13,10 +13,10 @@
         android:theme="@style/Theme.NoteApp"
         tools:targetApi="31">
         <activity
-            android:name=".AllNotesActivity"
+            android:name=".ui.AllNotesActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.App.SplashScreen">
             <intent-filter>

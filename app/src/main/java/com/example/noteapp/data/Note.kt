@@ -1,4 +1,4 @@
-package com.example.noteapp
+package com.example.noteapp.data
 
 data class Note(
     val title: String,
