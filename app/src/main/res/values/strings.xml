@@ -11,5 +11,5 @@
     <string name="create_account_btn">Create account</string>
     <string name="sign_in_text">Already have an account?</string>
     <string name="sign_in_btn">Sign in</string>
-
+    <string name="all_notes_text">All Notes</string>
 </resources>
