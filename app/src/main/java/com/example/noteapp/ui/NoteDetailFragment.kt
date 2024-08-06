@@ -1,7 +1,6 @@
 package com.example.noteapp.ui
 
 import android.os.Bundle
-import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,7 @@ class NoteDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.titleNote.text = note.title
-        binding.descriptionNote.setText(SpannableString(note.description))
+        binding.descriptionNote.setText(note.description)
         binding.backBtn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }

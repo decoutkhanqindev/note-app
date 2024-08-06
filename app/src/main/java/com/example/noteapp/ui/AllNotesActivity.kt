@@ -8,6 +8,7 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.ActivityAllNotesBinding
+import com.example.noteapp.utils.NoteClickListener
 import kotlin.random.Random
 
 class AllNotesActivity : AppCompatActivity() {
@@ -42,7 +43,7 @@ class AllNotesActivity : AppCompatActivity() {
             adapter = noteAdapter
         }
 
-        noteAdapter.setOnNoteClickListener(object : NoteAdapter.NoteClickListener {
+        noteAdapter.setOnNoteClickListener(object : NoteClickListener {
             override fun onNoteClick(note: Note) {
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)

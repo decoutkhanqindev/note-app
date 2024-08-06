@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.NoteItemLayoutBinding
 import com.example.noteapp.ui.NoteAdapter.NoteViewHolder
+import com.example.noteapp.utils.NoteClickListener
 
 class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     private var notes = emptyList<Note>()
@@ -36,10 +37,6 @@ class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     }
 
     override fun getItemCount(): Int = notes.size
-
-    interface NoteClickListener {
-        fun onNoteClick(note: Note)
-    }
 
     class NoteViewHolder(private val binding: NoteItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
