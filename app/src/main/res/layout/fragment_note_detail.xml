@@ -54,6 +54,7 @@
         android:fontFamily="@font/adlam_display"
         android:text="@string/hint_password"
         android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/backBtn"
@@ -70,17 +71,23 @@
         app:layout_constraintStart_toStartOf="@+id/titleNote"
         app:layout_constraintTop_toBottomOf="@+id/titleNote" />
 
-    <TextView
+    <EditText
         android:id="@+id/descriptionNote"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="35dp"
         android:layout_marginBottom="40dp"
-        android:text="@string/sign_up_text"
+        android:backgroundTint="@android:color/transparent"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/shareBtn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/addTime"
-        app:layout_constraintTop_toBottomOf="@+id/addTime" />
+        app:layout_constraintTop_toBottomOf="@+id/addTime"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveBtn"
@@ -91,8 +98,6 @@
         android:backgroundTint="@color/splash_bg"
         android:importantForAccessibility="no"
         android:src="@drawable/save"
-        android:textColor="@color/white"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

@@ -1,7 +1,10 @@
 package com.example.noteapp.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.ActivityAllNotesBinding
@@ -17,6 +20,12 @@ class AllNotesActivity : AppCompatActivity() {
 //        NoteListAdapter()
     }
 
+    private var isAddBtnVisible
+        get() = binding.addBtn.visibility == View.VISIBLE
+        set(value) {
+            binding.addBtn.visibility = if (value) View.VISIBLE else View.GONE
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -25,6 +34,21 @@ class AllNotesActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = noteAdapter
+        }
+
+        noteAdapter.setOnNoteClickListener(object : NoteAdapter.NoteClickListener {
+            override fun onNoteClick(note: Note) {
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(binding.fragmentContainerView.id, NoteDetailFragment.newInstance(note))
+                    addToBackStack(null)
+                }
+                isAddBtnVisible = false
+            }
+        })
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            isAddBtnVisible = supportFragmentManager.backStackEntryCount == 0
         }
 
         noteAdapter.updateNotes(

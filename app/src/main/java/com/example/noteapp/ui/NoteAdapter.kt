@@ -9,10 +9,15 @@ import com.example.noteapp.ui.NoteAdapter.NoteViewHolder
 
 class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     private var notes = emptyList<Note>()
+    private var onNoteClickListener: NoteClickListener? = null
 
     fun updateNotes(notes: List<Note>) {
         this.notes = notes
         notifyDataSetChanged()
+    }
+
+    fun setOnNoteClickListener(onNoteClickListener: NoteClickListener?) {
+        this.onNoteClickListener = onNoteClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
@@ -22,10 +27,19 @@ class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
             )
         )
 
-    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.bind(notes[position])
 
+        holder.itemView.setOnClickListener {
+            onNoteClickListener?.onNoteClick(notes[position])
+        }
+    }
+
     override fun getItemCount(): Int = notes.size
+
+    interface NoteClickListener {
+        fun onNoteClick(note: Note)
+    }
 
     class NoteViewHolder(private val binding: NoteItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {

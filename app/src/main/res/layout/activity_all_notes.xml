@@ -71,6 +71,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:name="com.example.noteapp.ui.NoteDetailFragment"
         tools:layout="@layout/fragment_note_detail" />
 </androidx.constraintlayout.widget.ConstraintLayout>
