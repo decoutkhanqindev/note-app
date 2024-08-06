@@ -9,9 +9,10 @@ import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.ActivityAllNotesBinding
 import com.example.noteapp.utils.OnNoteChangeClickListener
 import com.example.noteapp.utils.OnNoteClickListener
+import com.example.noteapp.utils.OnNoteDeleteClickListener
 import kotlin.random.Random
 
-class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener {
+class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteDeleteClickListener {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityAllNotesBinding.inflate(layoutInflater)
     }
@@ -130,9 +131,14 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener {
         )
 
         noteAdapter.setOnNoteChangeClickListener(this)
+        noteAdapter.setOnNoteDeleteClickListener(this)
     }
 
     override fun onNoteChange(noteId: Int, newNoteDescription: String) {
         noteAdapter.changeNoteDescription(noteId, newNoteDescription)
+    }
+
+    override fun onNoteDelete(noteId: Int) {
+        noteAdapter.deleteNote(noteId)
     }
 }

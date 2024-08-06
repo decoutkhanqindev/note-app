@@ -10,11 +10,13 @@ import com.example.noteapp.ui.NoteAdapter.NoteViewHolder
 import com.example.noteapp.utils.NoteDiffCallBack
 import com.example.noteapp.utils.OnNoteChangeClickListener
 import com.example.noteapp.utils.OnNoteClickListener
+import com.example.noteapp.utils.OnNoteDeleteClickListener
 
 class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     private var notes = mutableListOf<Note>()
     private var onNoteClickListener: OnNoteClickListener? = null
     private var onNoteChangeClickListener: OnNoteChangeClickListener? = null
+    private var onNoteDeleteClickListener: OnNoteDeleteClickListener? = null
 
     fun updateNotes(notes: List<Note>) {
         val noteDiffCallBack = NoteDiffCallBack(this.notes, notes)
@@ -32,12 +34,22 @@ class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         }
     }
 
+    fun deleteNote(noteId: Int) {
+        val note = notes.find { it.id == noteId }
+        notes.remove(note)
+        notifyItemRemoved(notes.indexOf(note))
+    }
+
     fun setOnNoteClickListener(onNoteClickListener: OnNoteClickListener?) {
         this.onNoteClickListener = onNoteClickListener
     }
 
     fun setOnNoteChangeClickListener(onNoteChangeClickListener: OnNoteChangeClickListener) {
         this.onNoteChangeClickListener = onNoteChangeClickListener
+    }
+
+    fun setOnNoteDeleteClickListener(onNoteDeleteClickListener: OnNoteDeleteClickListener) {
+        this.onNoteDeleteClickListener = onNoteDeleteClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =

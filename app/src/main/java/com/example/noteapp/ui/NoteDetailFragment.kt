@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.FragmentNoteDetailBinding
 import com.example.noteapp.utils.OnNoteChangeClickListener
+import com.example.noteapp.utils.OnNoteDeleteClickListener
 
 class NoteDetailFragment : Fragment() {
     private var binding: FragmentNoteDetailBinding? = null
     private var note: Note? = null
-    private var listener: OnNoteChangeClickListener? = null
+    private var noteChangeClickListener: OnNoteChangeClickListener? = null
+    private var noteDeleteClickListener: OnNoteDeleteClickListener? = null
     private var newNoteDescription = ""
 
     companion object {
@@ -40,9 +42,15 @@ class NoteDetailFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnNoteChangeClickListener) {
-            listener = context
+            noteChangeClickListener = context
         } else {
             throw RuntimeException("$context must implement OnNoteChangeListener")
+        }
+
+        if (context is OnNoteDeleteClickListener) {
+            noteDeleteClickListener = context
+        } else {
+            throw RuntimeException("$context must implement OnNoteDeleteClickListener")
         }
     }
 
@@ -75,7 +83,11 @@ class NoteDetailFragment : Fragment() {
         }
 
         binding?.saveBtn?.setOnClickListener {
-            listener?.onNoteChange(note?.id ?: -1, newNoteDescription)
+            noteChangeClickListener?.onNoteChange(note?.id ?: -1, newNoteDescription)
+        }
+
+        binding?.deleteBtn?.setOnClickListener {
+            noteDeleteClickListener?.onNoteDelete(note?.id ?: -1)
         }
 
         binding?.backBtn?.setOnClickListener {
@@ -84,7 +96,8 @@ class NoteDetailFragment : Fragment() {
     }
 
     override fun onDetach() {
-        listener = null
+        noteChangeClickListener = null
+        noteDeleteClickListener = null
         super.onDetach()
     }
 
