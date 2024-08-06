@@ -2,23 +2,43 @@ package com.example.noteapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.NoteItemLayoutBinding
 import com.example.noteapp.ui.NoteAdapter.NoteViewHolder
-import com.example.noteapp.utils.NoteClickListener
+import com.example.noteapp.utils.NoteDiffCallBack
+import com.example.noteapp.utils.OnNoteChangeClickListener
+import com.example.noteapp.utils.OnNoteClickListener
 
 class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
-    private var notes = emptyList<Note>()
-    private var onNoteClickListener: NoteClickListener? = null
+    private var notes = mutableListOf<Note>()
+    private var onNoteClickListener: OnNoteClickListener? = null
+    private var onNoteChangeClickListener: OnNoteChangeClickListener? = null
 
     fun updateNotes(notes: List<Note>) {
-        this.notes = notes
-        notifyDataSetChanged()
+        val noteDiffCallBack = NoteDiffCallBack(this.notes, notes)
+        val noteDiffResult = DiffUtil.calculateDiff(noteDiffCallBack)
+        this.notes.clear()
+        this.notes.addAll(notes)
+        noteDiffResult.dispatchUpdatesTo(this)
     }
 
-    fun setOnNoteClickListener(onNoteClickListener: NoteClickListener?) {
+    fun changeNoteDescription(noteId: Int, newNoteDescription: String) {
+        val note = notes.find { it.id == noteId }
+        note?.let {
+            it.description = newNoteDescription
+            notifyItemChanged(notes.indexOf(note))
+        }
+    }
+
+    fun setOnNoteClickListener(onNoteClickListener: OnNoteClickListener?) {
         this.onNoteClickListener = onNoteClickListener
+    }
+
+    fun setOnNoteChangeClickListener(onNoteChangeClickListener: OnNoteChangeClickListener) {
+        this.onNoteChangeClickListener = onNoteChangeClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
@@ -49,44 +69,3 @@ class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     }
 }
 
-//// new style
-//object NoteDiffCallBack : DiffUtil.ItemCallback<Note>() {
-//    override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean =
-//        oldItem.id == newItem.id
-//
-//    override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean = oldItem == newItem
-//}
-//
-//class NoteListAdapter(
-////    private val onItemClick: (Note) -> Unit
-//) : ListAdapter<Note, NoteListAdapter.NoteViewHolder>(NoteDiffCallBack) { // tinh toan dc su khac biet giua list cu va list moi
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
-//        NoteViewHolder(
-//            NoteItemLayoutBinding.inflate(
-//                LayoutInflater.from(parent.context), parent, false
-//            )
-//        )
-//
-//    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) =
-//        holder.bind(getItem(position))
-//
-//    inner class NoteViewHolder(private val binding: NoteItemLayoutBinding) :
-//        RecyclerView.ViewHolder(binding.root) {
-//        init {
-//            binding.root.setOnClickListener {
-//                if (adapterPosition != RecyclerView.NO_POSITION) {
-////                    onItemClick(getItem(adapterPosition))
-//                    getItem(adapterPosition)
-//                }
-//            }
-//        }
-//
-//        fun bind(note: Note) {
-//            binding.run {
-//                titleNote.text = note.title
-//                descriptionNote.text = note.description
-//            }
-//        }
-//    }
-//}

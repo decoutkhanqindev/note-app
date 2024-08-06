@@ -20,7 +20,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpUsage" />
+        tools:ignore="SpUsage,VisualLintOverlap" />
 
     <ImageView
         android:id="@+id/titleImg"

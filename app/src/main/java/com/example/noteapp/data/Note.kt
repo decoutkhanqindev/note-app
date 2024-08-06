@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Note(
-    val id: Int, val title: String, val description: String
+    val id: Int, val title: String, var description: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(), parcel.readString() ?: "", parcel.readString() ?: ""
