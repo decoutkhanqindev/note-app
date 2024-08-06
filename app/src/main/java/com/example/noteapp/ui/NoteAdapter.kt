@@ -3,7 +3,6 @@ package com.example.noteapp.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.NoteItemLayoutBinding
