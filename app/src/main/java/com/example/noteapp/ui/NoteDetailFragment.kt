@@ -14,11 +14,6 @@ import com.example.noteapp.utils.OnNoteChangeClickListener
 import com.example.noteapp.utils.OnNoteDeleteClickListener
 
 class NoteDetailFragment : Fragment() {
-    private var binding: FragmentNoteDetailBinding? = null
-    private var note: Note? = null
-    private var noteChangeClickListener: OnNoteChangeClickListener? = null
-    private var noteDeleteClickListener: OnNoteDeleteClickListener? = null
-    private var newNoteDescription = ""
 
     companion object {
         private const val ARG_NOTE = "arg_note"
@@ -32,6 +27,13 @@ class NoteDetailFragment : Fragment() {
         }
     }
 
+    // View Binding and data
+    private var binding: FragmentNoteDetailBinding? = null
+    private var note: Note? = null
+    private var noteChangeClickListener: OnNoteChangeClickListener? = null
+    private var noteDeleteClickListener: OnNoteDeleteClickListener? = null
+    private var newNoteDescription = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,6 +43,7 @@ class NoteDetailFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        // Check if listeners are implemented in the hosting Activity
         if (context is OnNoteChangeClickListener) {
             noteChangeClickListener = context
         } else {
@@ -64,6 +67,7 @@ class NoteDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up UI elements
         binding?.titleNote?.text = note?.title
 
         binding?.descriptionNote?.apply {
@@ -72,16 +76,20 @@ class NoteDetailFragment : Fragment() {
                 override fun beforeTextChanged(
                     s: CharSequence?, start: Int, count: Int, after: Int
                 ) {
+                    // Not used in this case
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     newNoteDescription = s.toString()
                 }
 
-                override fun afterTextChanged(s: Editable?) {}
+                override fun afterTextChanged(s: Editable?) {
+                    // Not used in this case
+                }
             })
         }
 
+        // Set click listeners for buttons
         binding?.saveBtn?.setOnClickListener {
             noteChangeClickListener?.onNoteChange(note?.id ?: -1, newNoteDescription)
         }
@@ -96,17 +104,20 @@ class NoteDetailFragment : Fragment() {
     }
 
     override fun onDetach() {
+        // Clear listeners to avoid leaks
         noteChangeClickListener = null
         noteDeleteClickListener = null
         super.onDetach()
     }
 
     override fun onDestroy() {
+        // Nullifying references
         note = null
         super.onDestroy()
     }
 
     override fun onDestroyView() {
+        // Nullifying references
         binding = null
         super.onDestroyView()
     }

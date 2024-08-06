@@ -13,33 +13,8 @@ import com.example.noteapp.utils.OnNoteClickListener
 import com.example.noteapp.utils.OnNoteDeleteClickListener
 
 class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
-    private var notes = mutableListOf<Note>()
-    private var onNoteClickListener: OnNoteClickListener? = null
-    private var onNoteChangeClickListener: OnNoteChangeClickListener? = null
-    private var onNoteDeleteClickListener: OnNoteDeleteClickListener? = null
 
-    fun updateNotes(notes: List<Note>) {
-        val noteDiffCallBack = NoteDiffCallBack(this.notes, notes)
-        val noteDiffResult = DiffUtil.calculateDiff(noteDiffCallBack)
-        this.notes.clear()
-        this.notes.addAll(notes)
-        noteDiffResult.dispatchUpdatesTo(this)
-    }
-
-    fun changeNoteDescription(noteId: Int, newNoteDescription: String) {
-        val note = notes.find { it.id == noteId }
-        note?.let {
-            it.description = newNoteDescription
-            notifyItemChanged(notes.indexOf(note))
-        }
-    }
-
-    fun deleteNote(noteId: Int) {
-        val note = notes.find { it.id == noteId }
-        notes.remove(note)
-        notifyItemRemoved(notes.indexOf(note))
-    }
-
+    // Listener interfaces
     fun setOnNoteClickListener(onNoteClickListener: OnNoteClickListener?) {
         this.onNoteClickListener = onNoteClickListener
     }
@@ -52,6 +27,38 @@ class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
         this.onNoteDeleteClickListener = onNoteDeleteClickListener
     }
 
+    // Data and listeners
+    private var notes = mutableListOf<Note>()
+    private var onNoteClickListener: OnNoteClickListener? = null
+    private var onNoteChangeClickListener: OnNoteChangeClickListener? = null
+    private var onNoteDeleteClickListener: OnNoteDeleteClickListener? = null
+
+    // Update notes in the adapter
+    fun updateNotes(notes: List<Note>) {
+        val noteDiffCallBack = NoteDiffCallBack(this.notes, notes)
+        val noteDiffResult = DiffUtil.calculateDiff(noteDiffCallBack)
+        this.notes.clear()
+        this.notes.addAll(notes)
+        noteDiffResult.dispatchUpdatesTo(this)
+    }
+
+    // Change note description
+    fun changeNoteDescription(noteId: Int, newNoteDescription: String) {
+        val note = notes.find { it.id == noteId }
+        note?.let {
+            it.description = newNoteDescription
+            notifyItemChanged(notes.indexOf(note))
+        }
+    }
+
+    // Delete a note
+    fun deleteNote(noteId: Int) {
+        val note = notes.find { it.id == noteId }
+        notes.remove(note)
+        notifyItemRemoved(notes.indexOf(note))
+    }
+
+    // RecyclerView.Adapter methods
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
         NoteViewHolder(
             NoteItemLayoutBinding.inflate(
@@ -69,6 +76,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
 
     override fun getItemCount(): Int = notes.size
 
+    // ViewHolder class
     class NoteViewHolder(private val binding: NoteItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {

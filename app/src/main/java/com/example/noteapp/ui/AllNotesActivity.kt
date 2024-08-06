@@ -13,14 +13,18 @@ import com.example.noteapp.utils.OnNoteDeleteClickListener
 import kotlin.random.Random
 
 class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteDeleteClickListener {
+
+    // View Binding
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityAllNotesBinding.inflate(layoutInflater)
     }
 
+    // Adapter for RecyclerView
     private val noteAdapter by lazy(LazyThreadSafetyMode.NONE) {
         NoteAdapter()
     }
 
+    // Visibility properties for UI elements
     private var isAddBtnVisible
         get() = binding.addBtn.visibility == View.VISIBLE
         set(value) {
@@ -37,29 +41,37 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        // RecyclerView setup
         binding.recycleView.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = noteAdapter
         }
 
+        // Set listeners for Adapter
+        noteAdapter.setOnNoteChangeClickListener(this)
+        noteAdapter.setOnNoteDeleteClickListener(this)
         noteAdapter.setOnNoteClickListener(object : OnNoteClickListener {
             override fun onNoteClick(note: Note) {
+                // Fragment transaction when a note is clicked
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
                     replace(binding.fragmentContainerView.id, NoteDetailFragment.newInstance(note))
                     addToBackStack(null)
                 }
+                // Update UI visibility
                 isAddBtnVisible = false
                 isRecycleViewVisible = false
             }
         })
 
+        // Handle back stack changes to update UI visibility
         supportFragmentManager.addOnBackStackChangedListener {
             isAddBtnVisible = supportFragmentManager.backStackEntryCount == 0
             isRecycleViewVisible = supportFragmentManager.backStackEntryCount == 0
         }
 
+        // Initialize notes data
         noteAdapter.updateNotes(
             mutableListOf(
                 Note(
@@ -129,11 +141,9 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
                 )
             )
         )
-
-        noteAdapter.setOnNoteChangeClickListener(this)
-        noteAdapter.setOnNoteDeleteClickListener(this)
     }
 
+    // Listener implementations
     override fun onNoteChange(noteId: Int, newNoteDescription: String) {
         noteAdapter.changeNoteDescription(noteId, newNoteDescription)
     }
