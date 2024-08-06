@@ -9,7 +9,7 @@ import com.example.noteapp.databinding.FragmentSignUpBinding
 import com.example.noteapp.utils.PasswordHelper
 
 class SignUpFragment : Fragment() {
-    private lateinit var binding: FragmentSignUpBinding
+    private var binding: FragmentSignUpBinding? = null
 
     private val passwordHelper by lazy(LazyThreadSafetyMode.NONE) {
         PasswordHelper()
@@ -19,19 +19,19 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         passwordHelper.setUpPasswordVisibilityBtn(
-            binding.visibilityPasswordBtn1, binding.editPassword
+            binding!!.visibilityPasswordBtn1, binding!!.editPassword
         )
         passwordHelper.setUpPasswordVisibilityBtn(
-            binding.visibilityPasswordBtn2, binding.editConfirmPassword
+            binding!!.visibilityPasswordBtn2, binding!!.editConfirmPassword
         )
 
-        binding.backBtn.setOnClickListener {
+        binding?.backBtn?.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
