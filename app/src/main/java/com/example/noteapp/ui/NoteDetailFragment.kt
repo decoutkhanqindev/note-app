@@ -1,6 +1,7 @@
 package com.example.noteapp.ui
 
 import android.os.Bundle
+import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,13 @@ class NoteDetailFragment : Fragment() {
 
     private lateinit var note: Note
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            note = it.getParcelable(ARG_NOTE)!!
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -35,11 +43,10 @@ class NoteDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            note = it.getParcelable(ARG_NOTE)!!
-        }
-
         binding.titleNote.text = note.title
-        binding.descriptionNote.setText(note.description)
+        binding.descriptionNote.setText(SpannableString(note.description))
+        binding.backBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 }

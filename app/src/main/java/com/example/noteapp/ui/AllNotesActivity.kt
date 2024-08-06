@@ -26,6 +26,12 @@ class AllNotesActivity : AppCompatActivity() {
             binding.addBtn.visibility = if (value) View.VISIBLE else View.GONE
         }
 
+    private var isRecycleViewVisible
+        get() = binding.recycleView.visibility == View.VISIBLE
+        set(value) {
+            binding.recycleView.visibility = if (value) View.VISIBLE else View.GONE
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -44,11 +50,13 @@ class AllNotesActivity : AppCompatActivity() {
                     addToBackStack(null)
                 }
                 isAddBtnVisible = false
+                isRecycleViewVisible = false
             }
         })
 
         supportFragmentManager.addOnBackStackChangedListener {
             isAddBtnVisible = supportFragmentManager.backStackEntryCount == 0
+            isRecycleViewVisible = supportFragmentManager.backStackEntryCount == 0
         }
 
         noteAdapter.updateNotes(
