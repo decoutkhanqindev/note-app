@@ -16,4 +16,7 @@
     <string name="timeAdd">12 October 2020, 9:30 AM</string>
     <string name="title_note_detail">Title</string>
     <string name="note_description_detail">Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you.</string>
+    <string name="title_add_note">Add notes</string>
+    <string name="hint_title_add_note">Title</string>
+    <string name="hint_description_add_note">Your notes here…</string>
 </resources>
