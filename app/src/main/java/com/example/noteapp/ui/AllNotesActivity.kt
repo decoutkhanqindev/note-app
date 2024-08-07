@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.noteapp.R
 import com.example.noteapp.data.Note
 import com.example.noteapp.databinding.ActivityAllNotesBinding
 import com.example.noteapp.utils.GenerateUniqueId
@@ -45,16 +46,15 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
             binding.recycleView.visibility = if (value) View.VISIBLE else View.GONE
         }
 
+    private var isEmptyRecycleViewVisible
+        get() = binding.emptyRecycleView.visibility == View.VISIBLE
+        set(value) {
+            binding.emptyRecycleView.visibility = if (value) View.VISIBLE else View.GONE
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        // RecyclerView setup
-        binding.recycleView.run {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = noteAdapter
-        }
 
         // Set listeners for Adapter
         noteAdapter.setOnNoteChangeClickListener(this)
@@ -71,8 +71,9 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
                 }
                 // Update UI visibility
                 isAddBtnVisible = false
-                isRecycleViewVisible = false
                 isTitleVisible = false
+                isRecycleViewVisible = false
+                isEmptyRecycleViewVisible = false
             }
         })
 
@@ -86,87 +87,93 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
             }
             // Update UI visibility
             isAddBtnVisible = false
-            isRecycleViewVisible = false
             isTitleVisible = false
+            isRecycleViewVisible = false
+            isEmptyRecycleViewVisible = false
         }
 
         // Handle back stack changes to update UI visibility
         supportFragmentManager.addOnBackStackChangedListener {
             isAddBtnVisible = supportFragmentManager.backStackEntryCount == 0
-            isRecycleViewVisible = supportFragmentManager.backStackEntryCount == 0
             isTitleVisible = supportFragmentManager.backStackEntryCount == 0
+            isRecycleViewVisible = supportFragmentManager.backStackEntryCount == 0
+            updateUiVisibility(noteAdapter.itemCount > 0)
         }
 
         // Initialize notes data
-        noteAdapter.updateNotes(
-            mutableListOf(
-                Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Youtube script ideas \uD83C\uDF96",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Datastore Blog Ideas  \uD83E\uDD8B",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Social media blogs  \uD83D\uDCD5",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Youtube script ideas \uD83C\uDF96",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Datastore Blog Ideas  \uD83E\uDD8B",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Social media blogs  \uD83D\uDCD5",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Youtube script ideas \uD83C\uDF96",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Datastore Blog Ideas  \uD83E\uDD8B",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Social media blogs  \uD83D\uDCD5",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Youtube script ideas \uD83C\uDF96",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Datastore Blog Ideas  \uD83E\uDD8B",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                ), Note(
-                    id = GenerateUniqueId.generateUniqueId(),
-                    title = "Social media blogs  \uD83D\uDCD5",
-                    description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
-                )
+        val notes = mutableListOf(
+            Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Youtube script ideas \uD83C\uDF96",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Datastore Blog Ideas  \uD83E\uDD8B",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Social media blogs  \uD83D\uDCD5",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Youtube script ideas \uD83C\uDF96",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Datastore Blog Ideas  \uD83E\uDD8B",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Social media blogs  \uD83D\uDCD5",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Youtube script ideas \uD83C\uDF96",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Datastore Blog Ideas  \uD83E\uDD8B",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Social media blogs  \uD83D\uDCD5",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Youtube script ideas \uD83C\uDF96",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Datastore Blog Ideas  \uD83E\uDD8B",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "College skit review \uD83C\uDFC4\uD83D\uDE1D",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
+            ), Note(
+                id = GenerateUniqueId.generateUniqueId(),
+                title = "Social media blogs  \uD83D\uDCD5",
+                description = "Google Play Protect, regular security updates and control over how your data is shared. We’re dedicated to securing Android’s 2.5 billion+ active devices every day and keeping information private.\n" + "\n" + "Screen readers, speech-to-text and some of the newest ways to experience the world your way.\n" + "\n" + "Choices for work, gaming, 5G streaming and anything else. There are over 24,000 phones and tablets that run on Android globally. So no matter what you’re looking for, there’s something for you."
             )
         )
+
+        val emptyNotes = emptyList<Note>()
+
+        noteAdapter.updateNotes(emptyNotes)
+
+        updateUiVisibility(noteAdapter.itemCount > 0)
     }
 
     // Listener implementations
@@ -176,9 +183,26 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
 
     override fun onNoteDelete(noteId: Int) {
         noteAdapter.deleteNote(noteId)
+        updateUiVisibility(noteAdapter.itemCount > 0)
     }
 
     override fun onNoteAdd(newNote: Note) {
         noteAdapter.addNote(newNote)
+        updateUiVisibility(noteAdapter.itemCount > 0)
+    }
+
+    private fun updateUiVisibility(isRecycleViewVisible: Boolean) {
+        isEmptyRecycleViewVisible = !isRecycleViewVisible
+        if (isEmptyRecycleViewVisible) {
+            binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
+        } else {
+            binding.emptyRecycleView.visibility = View.GONE
+            // RecyclerView setup (only when notes list is not empty)
+            binding.recycleView.run {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                adapter = noteAdapter
+            }
+        }
     }
 }
