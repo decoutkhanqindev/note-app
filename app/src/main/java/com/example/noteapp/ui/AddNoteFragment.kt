@@ -13,7 +13,8 @@ import com.example.noteapp.utils.OnNoteAddClickListener
 
 class AddNoteFragment : Fragment() {
     // View Binding and data
-    private var binding: FragmentAddNoteBinding? = null
+    private var _binding: FragmentAddNoteBinding? = null
+    private val binding get() = _binding!!
     private var noteAddClickListener: OnNoteAddClickListener? = null
     private var newNote = Note(0, "", "")
 
@@ -30,23 +31,23 @@ class AddNoteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddNoteBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.saveBtn?.setOnClickListener {
+        binding.saveBtn.setOnClickListener {
             newNote.apply {
                 id = GenerateUniqueId.generateUniqueId()
-                title = binding?.editTitleNote?.text.toString()
-                description = binding?.editDescriptionNote?.text.toString()
+                title = binding.editTitleNote.text.toString()
+                description = binding.editDescriptionNote.text.toString()
             }
             noteAddClickListener?.onNoteAdd(newNote)
         }
 
-        binding?.backBtn?.setOnClickListener {
+        binding.backBtn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
@@ -57,7 +58,7 @@ class AddNoteFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        binding = null
+        _binding = null
         super.onDestroyView()
     }
 }
