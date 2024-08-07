@@ -27,7 +27,7 @@
         android:fontFamily="@font/adlam_display"
         android:text="@string/title_add_note"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/backBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,28 +55,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backBtn" />
 
-    <EditText
-        android:id="@+id/editDescriptionNote"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="35dp"
         android:layout_marginBottom="40dp"
-        android:backgroundTint="@android:color/transparent"
-        android:hint="@string/hint_description_add_note"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:minHeight="48dp"
-        android:textColorHint="#78888A"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTitleNote"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <EditText
+            android:id="@+id/editDescriptionNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="@string/hint_description_add_note"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            android:textColorHint="#78888A"
+            android:textSize="25sp"
+            tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveBtn"

@@ -171,7 +171,7 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
 
         val emptyNotes = emptyList<Note>()
 
-        noteAdapter.updateNotes(emptyNotes)
+        noteAdapter.updateNotes(notes)
 
         updateUiVisibility(noteAdapter.itemCount > 0)
     }

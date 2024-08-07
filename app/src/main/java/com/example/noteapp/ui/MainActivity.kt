@@ -25,10 +25,12 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Install splash screen
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        // Set up sign-up button click listener
         binding.signUpBtn.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
@@ -38,14 +40,17 @@ class MainActivity : AppCompatActivity() {
             isLoginBtnVisible = false
         }
 
+        // Add back stack change listener
         supportFragmentManager.addOnBackStackChangedListener {
             isLoginBtnVisible = supportFragmentManager.backStackEntryCount == 0
         }
 
+        // Set up password visibility button
         passwordHelper.setUpPasswordVisibilityBtn(
             binding.visibilityPasswordBtn, binding.editPassword
         )
 
+        // Set up login button click listener
         binding.loginBtn.setOnClickListener {
             if (binding.editUsername.text!!.isNotEmpty() && binding.editPassword.text!!.isNotEmpty()) {
                 startActivity(Intent(this, AllNotesActivity::class.java))

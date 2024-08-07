@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
+    android:padding="8dp"
     android:background="@drawable/rounded_corner_bg">
 
     <TextView
@@ -14,7 +15,7 @@
         android:fontFamily="@font/adlam_display"
         android:text="@string/all_notes_text"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
         android:fontFamily="@font/adlam_display"
         android:maxLines="3"
         android:text="@string/sign_up_text"
-        android:textSize="16dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
