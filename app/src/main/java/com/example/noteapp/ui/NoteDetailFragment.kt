@@ -28,7 +28,8 @@ class NoteDetailFragment : Fragment() {
     }
 
     // View Binding and data
-    private var binding: FragmentNoteDetailBinding? = null
+    private var _binding: FragmentNoteDetailBinding? = null
+    private val binding get() = _binding!!
     private var note: Note? = null
     private var noteChangeClickListener: OnNoteChangeClickListener? = null
     private var noteDeleteClickListener: OnNoteDeleteClickListener? = null
@@ -60,17 +61,17 @@ class NoteDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Set up UI elements
-        binding?.titleNote?.text = note?.title
+        binding.titleNote.text = note?.title
 
-        binding?.descriptionNote?.apply {
+        binding.descriptionNote.apply {
             setText(note?.description)
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
@@ -90,15 +91,15 @@ class NoteDetailFragment : Fragment() {
         }
 
         // Set click listeners for buttons
-        binding?.saveBtn?.setOnClickListener {
+        binding.saveBtn.setOnClickListener {
             noteChangeClickListener?.onNoteChange(note?.id ?: -1, newNoteDescription)
         }
 
-        binding?.deleteBtn?.setOnClickListener {
+        binding.deleteBtn.setOnClickListener {
             noteDeleteClickListener?.onNoteDelete(note?.id ?: -1)
         }
 
-        binding?.backBtn?.setOnClickListener {
+        binding.backBtn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
@@ -118,7 +119,7 @@ class NoteDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         // Nullifying references
-        binding = null
+        _binding = null
         super.onDestroyView()
     }
 }
