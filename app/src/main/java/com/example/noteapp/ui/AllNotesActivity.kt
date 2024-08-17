@@ -181,12 +181,10 @@ class AllNotesActivity : AppCompatActivity(), OnNoteChangeClickListener, OnNoteD
 
     override fun onNoteDelete(noteId: Int) {
         noteAdapter.deleteNote(noteId)
-        updateUiVisibility(noteAdapter.itemCount > 0)
     }
 
     override fun onNoteAdd(newNote: Note) {
         noteAdapter.addNote(newNote)
-        updateUiVisibility(noteAdapter.itemCount > 0)
     }
 
     private fun updateUiVisibility(isRecycleViewVisible: Boolean) {
