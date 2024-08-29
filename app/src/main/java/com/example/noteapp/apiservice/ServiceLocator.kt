@@ -16,7 +16,5 @@ object ServiceLocator {
 
     private fun moshiProvider(): Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 
-    val noteService: NoteService by lazy {
-        retrofit.create(NoteService::class.java)
-    }
+    val noteService: NoteService by lazy { retrofit.create(NoteService::class.java) }
 }
