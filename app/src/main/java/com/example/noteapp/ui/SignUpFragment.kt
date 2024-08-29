@@ -10,9 +10,9 @@ import com.example.noteapp.utils.PasswordHelper
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentSignUpBinding get() = _binding!!
 
-    private val passwordHelper by lazy(LazyThreadSafetyMode.NONE) {
+    private val passwordHelper: PasswordHelper by lazy(LazyThreadSafetyMode.NONE) {
         PasswordHelper()
     }
 

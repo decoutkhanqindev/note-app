@@ -12,7 +12,7 @@ import com.example.noteapp.utils.GenerateUniqueId
 
 class AllNotesActivity : AppCompatActivity() {
     // View Binding
-    private val binding by lazy(LazyThreadSafetyMode.NONE) {
+    private val binding: ActivityAllNotesBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityAllNotesBinding.inflate(layoutInflater)
     }
 

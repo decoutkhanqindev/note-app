@@ -10,11 +10,11 @@ import com.example.noteapp.databinding.ActivityMainBinding
 import com.example.noteapp.utils.PasswordHelper
 
 class MainActivity : AppCompatActivity() {
-    private val binding by lazy(LazyThreadSafetyMode.NONE) {
+    private val binding: ActivityMainBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val passwordHelper by lazy(LazyThreadSafetyMode.NONE) {
+    private val passwordHelper: PasswordHelper by lazy(LazyThreadSafetyMode.NONE) {
         PasswordHelper()
     }
 
