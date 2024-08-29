@@ -37,7 +37,6 @@ android {
 
     buildFeatures {
         viewBinding = true
-        buildConfig = true
     }
     sourceSets {
         getByName("main") {
@@ -63,6 +62,7 @@ dependencies {
     // retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.moshi)
+    implementation(libs.moshi.kotlin)
 
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -70,7 +70,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
     // room db
-
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
