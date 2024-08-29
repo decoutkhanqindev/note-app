@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1",
+    "title": "Meeting Notes",
+    "description": "Discussed project milestones and deadlines."
+  },
+  {
+    "id": "2",
+    "title": "Shopping List",
+    "description": "Milk, Eggs, Bread, Butter, and Cheese."
+  },
+  {
+    "id": "3",
+    "title": "Daily Journal",
+    "description": "Today was a productive day, completed several tasks at work."
+  },
+  {
+    "id": "4",
+    "title": "Workout Plan",
+    "description": "Monday: Chest and Triceps; Wednesday: Back and Biceps; Friday: Legs and Shoulders."
+  },
+  {
+    "id": "5",
+    "title": "Recipe Idea",
+    "description": "Try a new pasta recipe with fresh tomatoes, basil, and garlic."
+  },
+  {
+    "id": "6",
+    "title": "To-Do List",
+    "description": "Finish reading the book, complete the report, and call the bank."
+  },
+  {
+    "id": "7",
+    "title": "Vacation Plan",
+    "description": "Book flights to Paris, reserve a hotel, and plan a city tour."
+  },
+  {
+    "id": "8",
+    "title": "Learning Goals",
+    "description": "Complete a course on machine learning and start a new coding project."
+  },
+  {
+    "id": "9",
+    "title": "Books to Read",
+    "description": "1. 'Atomic Habits' by James Clear; 2. 'Sapiens' by Yuval Noah Harari."
+  },
+  {
+    "id": "10",
+    "title": "Ideas for Blog Posts",
+    "description": "Write about the benefits of mindfulness meditation and share a beginner's guide."
+  },
+  {
+    "id": "11",
+    "title": "Weekly Agenda",
+    "description": "Monday: Team Meeting; Wednesday: Client Presentation; Friday: Project Review."
+  },
+  {
+    "id": "12",
+    "title": "Gardening Tips",
+    "description": "Water plants in the early morning, prune roses in spring."
+  },
+  {
+    "id": "13",
+    "title": "Movie Watchlist",
+    "description": "Inception, The Godfather, The Dark Knight, Pulp Fiction."
+  },
+  {
+    "id": "14",
+    "title": "Language Practice",
+    "description": "Practice Spanish vocabulary daily, complete 5 lessons per week."
+  },
+  {
+    "id": "15",
+    "title": "Birthday Party Plan",
+    "description": "Invite friends, order cake, plan games, decorate the venue."
+  },
+  {
+    "id": "16",
+    "title": "Tech Conference Notes",
+    "description": "New trends in AI, the future of blockchain technology, and quantum computing."
+  },
+  {
+    "id": "17",
+    "title": "Cooking Experiments",
+    "description": "Try making sourdough bread and homemade pasta."
+  },
+  {
+    "id": "18",
+    "title": "Self-Improvement Goals",
+    "description": "Read 30 minutes every day, exercise 3 times a week, and practice gratitude."
+  },
+  {
+    "id": "19",
+    "title": "Financial Planning",
+    "description": "Set a monthly budget, track expenses, invest in stocks and bonds."
+  },
+  {
+    "id": "20",
+    "title": "Creative Writing Prompts",
+    "description": "Write a short story based on a dream, create a poem about the ocean."
+  }
+]
