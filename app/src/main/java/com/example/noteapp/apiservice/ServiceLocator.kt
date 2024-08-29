@@ -6,7 +6,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object ServiceLocator {
-    private const val BASE_URL: String = "https://44cda99f-cdc5-4940-9280-602add0ce168.mock.pstmn.io"
+    private const val BASE_URL: String =
+        "https://44cda99f-cdc5-4940-9280-602add0ce168.mock.pstmn.io"
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder().baseUrl(BASE_URL)
@@ -14,4 +15,8 @@ object ServiceLocator {
     }
 
     private fun moshiProvider(): Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+
+    val noteService: NoteService by lazy {
+        retrofit.create(NoteService::class.java)
+    }
 }
