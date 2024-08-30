@@ -19,7 +19,7 @@ class NoteDetailFragment : Fragment() {
 
     private var note: Note? = null
 
-    private val viewModel by viewModels<NoteViewModel>(factoryProducer = {
+    private val viewModel: NoteViewModel by viewModels<NoteViewModel>(factoryProducer = {
         viewModelFactory {
             addInitializer(NoteViewModel::class) {
                 NoteViewModel(application = requireActivity().application)
