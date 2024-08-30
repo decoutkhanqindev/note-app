@@ -77,6 +77,18 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun updateNotes(notes: List<Note>) {
+        viewModelScope.launch {
+            try {
+                noteDatabase.noteDAO().insertNotes(notes)
+            } catch (cancel: CancellationException) {
+                throw cancel
+            } catch (throwable: Throwable) {
+                Log.d("NoteViewModel", "insertNotes: $throwable")
+            }
+        }
+    }
+
     fun deleteNote(note: Note) {
         viewModelScope.launch {
             try {

@@ -57,7 +57,7 @@ class NoteDetailFragment : Fragment() {
             })
 
             binding.saveBtn.setOnClickListener {
-                viewModel.updateNote(note!!)
+                viewModel.updateNote(note = note!!)
             }
 
             binding.backBtn.setOnClickListener {
