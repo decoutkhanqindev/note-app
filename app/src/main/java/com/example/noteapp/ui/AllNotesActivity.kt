@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapp.R
 import com.example.noteapp.databinding.ActivityAllNotesBinding
 import com.example.noteapp.model.Note
@@ -70,9 +69,9 @@ class AllNotesActivity : AppCompatActivity() {
                 view.visibility = View.VISIBLE
             } else {
                 view.visibility = View.GONE
-                if (view.id == binding.recycleView.id && noteAdapter.itemCount == 0) {
-                    binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
-                }
+            }
+            if (noteAdapter.itemCount == 0) {
+                binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
             }
         }
     }
