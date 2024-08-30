@@ -12,8 +12,6 @@ class NoteAdapter(
     private val onNoteCLick: (Note) -> Unit
 ) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(NoteDiffUtilItemCallBack) {
 
-    private val notes: List<Note> = emptyList()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
         NoteViewHolder(
             NoteItemLayoutBinding.inflate(
@@ -23,8 +21,6 @@ class NoteAdapter(
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) =
         holder.bind(note = getItem(position))
-
-    override fun getItemCount(): Int = notes.size
 
     inner class NoteViewHolder(private val binding: NoteItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
