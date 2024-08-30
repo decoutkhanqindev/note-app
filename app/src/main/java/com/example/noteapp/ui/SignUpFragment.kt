@@ -35,6 +35,10 @@ class SignUpFragment : Fragment() {
             binding.visibilityPasswordBtn2, binding.editConfirmPassword
         )
 
+        binding.signInBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
         // Set up back button click listener
         binding.backBtn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
