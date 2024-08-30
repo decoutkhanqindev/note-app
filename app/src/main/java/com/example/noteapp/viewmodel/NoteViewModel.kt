@@ -44,8 +44,8 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             } catch (throwable: Throwable) {
                 noteServiceMutableLiveData.value = NoteServiceState.Error(throwable)
             }
+            Log.d("NoteViewModel", "getAllNotesService: ${noteServiceMutableLiveData.value}")
         }
-        Log.d("NoteViewModel", "getAllNotesService: ${noteServiceLiveData.value}")
     }
 
     fun insertNote(note: Note) {

@@ -15,7 +15,7 @@ class AllNotesActivity : AppCompatActivity() {
         ActivityAllNotesBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by viewModels<NoteViewModel>(factoryProducer = {
+    private val viewModel: NoteViewModel by viewModels<NoteViewModel>(factoryProducer = {
         viewModelFactory {
             addInitializer(clazz = NoteViewModel::class) {
                 NoteViewModel(application = application)
@@ -27,13 +27,13 @@ class AllNotesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        viewModel.getAllNotesService()
-        viewModel.notesLiveData.observe(this) { notes ->
-            createRecycleView(notes)
+        viewModel.getAllNotesService() // call api
+        viewModel.notesLiveData.observe(this) { notes: List<Note> ->
+            initRecycleView(notes)
         }
     }
 
-    private fun createRecycleView(notes: List<Note>) {
+    private fun initRecycleView(notes: List<Note>) {
         binding.recycleView.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
