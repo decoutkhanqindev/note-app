@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.noteapp.R
 import com.example.noteapp.databinding.ActivityAllNotesBinding
 import com.example.noteapp.model.Note
 import com.example.noteapp.viewmodel.NoteViewModel
@@ -39,6 +41,7 @@ class AllNotesActivity : AppCompatActivity() {
         }
         initRecycleView()
         handleBackStackToUi(view = binding.addBtn)
+        handleBackStackToUi(view = binding.recycleView)
     }
 
     private fun initRecycleView() {
@@ -63,10 +66,13 @@ class AllNotesActivity : AppCompatActivity() {
 
     private fun handleBackStackToUi(view: View) {
         supportFragmentManager.addOnBackStackChangedListener {
-            view.visibility = if (supportFragmentManager.backStackEntryCount == 0) {
-                View.VISIBLE
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                view.visibility = View.VISIBLE
             } else {
-                View.GONE
+                view.visibility = View.GONE
+                if (view.id == binding.recycleView.id && noteAdapter.itemCount == 0) {
+                    binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
+                }
             }
         }
     }

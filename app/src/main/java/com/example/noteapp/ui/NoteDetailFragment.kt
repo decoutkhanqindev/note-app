@@ -60,6 +60,10 @@ class NoteDetailFragment : Fragment() {
                 viewModel.updateNote(note = note!!)
             }
 
+            binding.deleteBtn.setOnClickListener {
+                viewModel.deleteNote(note = note!!)
+            }
+
             binding.backBtn.setOnClickListener {
                 requireActivity().supportFragmentManager.popBackStack()
             }
