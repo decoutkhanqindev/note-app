@@ -80,7 +80,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun updateNotes(notes: List<Note>) {
         viewModelScope.launch {
             try {
-                noteDatabase.noteDAO().insertNotes(notes)
+                noteDatabase.noteDAO().updateNotes(notes)
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (throwable: Throwable) {

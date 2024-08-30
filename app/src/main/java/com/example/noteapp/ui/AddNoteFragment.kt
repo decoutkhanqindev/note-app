@@ -15,7 +15,7 @@ class AddNoteFragment : Fragment() {
     private var _binding: FragmentAddNoteBinding? = null
     private val binding: FragmentAddNoteBinding get() = _binding!!
 
-    private val viewModel by viewModels<NoteViewModel>(factoryProducer = {
+    private val viewModel: NoteViewModel by viewModels<NoteViewModel>(factoryProducer = {
         viewModelFactory {
             addInitializer(NoteViewModel::class) {
                 NoteViewModel(requireActivity().application)
@@ -33,9 +33,10 @@ class AddNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val title: String = binding.editTitleNote.text.toString()
-        val description: String = binding.editDescriptionNote.text.toString()
+
         binding.saveBtn.setOnClickListener {
+            val title: String = binding.editTitleNote.text.toString()
+            val description: String = binding.editDescriptionNote.text.toString()
             if (title.isNotEmpty()) {
                 viewModel.insertNote(
                     Note(
