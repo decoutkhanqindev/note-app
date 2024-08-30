@@ -34,14 +34,12 @@ class AddNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveBtn.setOnClickListener {
-            val title: String = binding.editTitleNote.text.toString()
-            val description: String = binding.editDescriptionNote.text.toString()
-            if (title.isNotEmpty()) {
+            if (binding.editTitleNote.text.toString().isNotEmpty()) {
                 viewModel.insertNote(
                     Note(
                         id = System.currentTimeMillis().toInt(),
-                        title = title,
-                        description = description
+                        title = binding.editTitleNote.text.toString(),
+                        description = binding.editDescriptionNote.text.toString()
                     )
                 )
             }
