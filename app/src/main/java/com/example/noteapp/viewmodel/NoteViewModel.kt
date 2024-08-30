@@ -14,7 +14,6 @@ import com.example.noteapp.database.NoteDatabase
 import com.example.noteapp.model.Note
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -44,7 +43,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             } catch (throwable: Throwable) {
                 noteServiceMutableLiveData.value = NoteServiceState.Error(throwable)
             }
-            Log.d("NoteViewModel", "getAllNotesService: ${noteServiceMutableLiveData.value}")
+            Log.d("NoteViewModel", "getAllNotesService: ${noteServiceLiveData.value}")
         }
     }
 
