@@ -26,7 +26,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     // db
     private val noteDatabase: NoteDatabase = DatabaseLocator.getInstance(context = application)
-    val notesLiveData: LiveData<List<Note>> get() = noteDatabase.noteDAO().observeAllNotes()
+    val notesLiveData: LiveData<List<Note>> = noteDatabase.noteDAO().observeAllNotes()
 
     init {
         getAllNotesService()
