@@ -43,6 +43,7 @@ class AddNoteFragment : Fragment() {
                     )
                 )
             }
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         binding.backBtn.setOnClickListener {
