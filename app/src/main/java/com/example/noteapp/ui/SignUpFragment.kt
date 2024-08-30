@@ -39,7 +39,6 @@ class SignUpFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        // Set up back button click listener
         binding.backBtn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }

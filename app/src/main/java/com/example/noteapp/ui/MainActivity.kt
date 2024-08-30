@@ -18,43 +18,48 @@ class MainActivity : AppCompatActivity() {
         PasswordHelper()
     }
 
-    private var isLoginBtnVisible: Boolean
-        get() = binding.loginBtn.visibility == View.VISIBLE
-        set(value) {
-            binding.loginBtn.visibility = if (value) View.VISIBLE else View.GONE
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Install splash screen
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        // Set up sign-up button click listener
         binding.signUpBtn.setOnClickListener {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(binding.fragmentContainerView.id, SignUpFragment())
-                addToBackStack(null)
-            }
-            isLoginBtnVisible = false
+            moveToSignUpFragment()
         }
 
-        // Add back stack change listener
-        supportFragmentManager.addOnBackStackChangedListener {
-            isLoginBtnVisible = supportFragmentManager.backStackEntryCount == 0
-        }
+        handleBackStackToUi(binding.loginBtn)
 
-        // Set up password visibility button
         passwordHelper.setUpPasswordVisibilityBtn(
             binding.visibilityPasswordBtn, binding.editPassword
         )
 
-        // Set up login button click listener
         binding.loginBtn.setOnClickListener {
-            if (binding.editUsername.text!!.isNotEmpty() && binding.editPassword.text!!.isNotEmpty()) {
-                startActivity(Intent(this, AllNotesActivity::class.java))
+            moveToAllNotesActivity()
+        }
+    }
+
+    private fun moveToAllNotesActivity() {
+        if (binding.editUsername.text!!.isNotEmpty() && binding.editPassword.text!!.isNotEmpty()) {
+            startActivity(Intent(this, AllNotesActivity::class.java))
+        }
+    }
+
+    private fun moveToSignUpFragment() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.fragmentContainerView.id, SignUpFragment())
+            addToBackStack(null)
+        }
+    }
+
+    private fun handleBackStackToUi(view: View) {
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                view.visibility = View.VISIBLE
+            } else {
+                view.visibility = View.GONE
             }
         }
     }
 }
+
