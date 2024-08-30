@@ -1,7 +1,6 @@
 package com.example.noteapp.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -14,18 +13,15 @@ interface NoteDao {
     @Query("SELECT * FROM notes")
     fun observeAllNotes(): LiveData<List<Note>>
 
-    @Query("SELECT * FROM notes")
-    fun getAllNotes(): List<Note>
+    @Insert
+    suspend fun insertNote(note: Note)
 
     @Insert
-    fun insertNote(note: Note)
-
-    @Insert
-    fun insertNotes(notes: List<Note>)
+    suspend fun insertNotes(notes: List<Note>)
 
     @Update
-    fun updateNote(note: Note)
+    suspend fun updateNote(note: Note)
 
     @Delete
-    fun deleteNote(note: Note)
+    suspend fun deleteNote(note: Note)
 }

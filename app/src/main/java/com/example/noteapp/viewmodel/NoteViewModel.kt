@@ -14,6 +14,7 @@ import com.example.noteapp.database.NoteDatabase
 import com.example.noteapp.model.Note
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,10 +23,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val noteService: NoteService = ServiceLocator.noteService
     private val noteServiceMutableLiveData: MutableLiveData<NoteServiceState> =
         MutableLiveData<NoteServiceState>()
+    private val noteServiceLiveData: LiveData<NoteServiceState> get() = noteServiceMutableLiveData
 
     // db
     private val noteDatabase: NoteDatabase = DatabaseLocator.getInstance(context = application)
-    val notesLiveData: LiveData<List<Note>> get() = noteDatabase.noteDAO().observeAllNotes()
+    val notesLiveData: LiveData<List<Note>> = noteDatabase.noteDAO().observeAllNotes()
 
     // get all notes from api
     fun getAllNotesService() {
@@ -43,15 +45,43 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
                 noteServiceMutableLiveData.value = NoteServiceState.Error(throwable)
             }
         }
-        Log.d("NoteViewModel", "getAllNotesService: ${noteServiceMutableLiveData.value}")
+        Log.d("NoteViewModel", "getAllNotesService: ${noteServiceLiveData.value}")
     }
 
-    // get all notes from db
-    fun getAllNotes(): List<Note> = noteDatabase.noteDAO().getAllNotes()
+    fun insertNote(note: Note) {
+        viewModelScope.launch {
+            try {
+                noteDatabase.noteDAO().insertNote(note)
+            } catch (cancel: CancellationException) {
+                throw cancel
+            } catch (throwable: Throwable) {
+                Log.d("NoteViewModel", "insertNote: $throwable")
+            }
+        }
+    }
 
-    fun addNote(note: Note): Unit = noteDatabase.noteDAO().insertNote(note)
+    fun updateNote(note: Note) {
+        viewModelScope.launch {
+            try {
+                noteDatabase.noteDAO().updateNote(note)
+            } catch (cancel: CancellationException) {
+                throw cancel
+            } catch (throwable: Throwable) {
+                Log.d("NoteViewModel", "addNote: $throwable")
+            }
+        }
+    }
 
-    fun updateNote(note: Note): Unit = noteDatabase.noteDAO().updateNote(note)
-
-    fun deleteNote(note: Note): Unit = noteDatabase.noteDAO().deleteNote(note)
+    fun deleteNote(note: Note) {
+        viewModelScope.launch {
+            try {
+                noteDatabase.noteDAO().deleteNote(note)
+            } catch (cancel: CancellationException) {
+                throw cancel
+            } catch (throwable: Throwable) {
+                Log.d("NoteViewModel", "addNote: $throwable")
+            }
+        }
+    }
 }
+
