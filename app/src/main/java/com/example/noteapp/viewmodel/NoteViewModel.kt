@@ -84,7 +84,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (throwable: Throwable) {
-                Log.d("NoteViewModel", "insertNotes: $throwable")
+                Log.d("NoteViewModel", "updateNotes: $throwable")
             }
         }
     }
