@@ -33,7 +33,6 @@ class AddNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.saveBtn.setOnClickListener {
             val title: String = binding.editTitleNote.text.toString()
             val description: String = binding.editDescriptionNote.text.toString()
