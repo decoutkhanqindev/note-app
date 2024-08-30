@@ -1,6 +1,7 @@
 package com.example.noteapp.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
@@ -32,11 +33,11 @@ class AllNotesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        viewModel.getAllNotesService() // call api
         viewModel.notesLiveData.observe(this) { notes: List<Note> ->
             noteAdapter.submitList(notes)
         }
         initRecycleView()
+        handleBackStackToUi(view = binding.addBtn)
     }
 
     private fun initRecycleView() {
@@ -56,6 +57,16 @@ class AllNotesActivity : AppCompatActivity() {
                 }
             })
             addToBackStack(null)
+        }
+    }
+
+    private fun handleBackStackToUi(view: View) {
+        supportFragmentManager.addOnBackStackChangedListener {
+            view.visibility = if (supportFragmentManager.backStackEntryCount == 0) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 }

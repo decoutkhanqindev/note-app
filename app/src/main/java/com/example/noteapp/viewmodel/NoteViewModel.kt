@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.DiffUtil
 import com.example.noteapp.apiservice.NoteService
 import com.example.noteapp.apiservice.NoteServiceState
 import com.example.noteapp.apiservice.ServiceLocator
@@ -29,22 +28,28 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val noteDatabase: NoteDatabase = DatabaseLocator.getInstance(context = application)
     val notesLiveData: LiveData<List<Note>> = noteDatabase.noteDAO().observeAllNotes()
 
+    init {
+        getAllNotesService()
+    }
+
     // get all notes from api
-    fun getAllNotesService() {
+    private fun getAllNotesService() {
         noteServiceMutableLiveData.value = NoteServiceState.Loading
         viewModelScope.launch {
-            try {
-                val response: List<Note> = withContext(Dispatchers.IO) {
-                    noteService.getAllNotes()
+            if (noteDatabase.noteDAO().getAllNotes().isEmpty()) {
+                try {
+                    val response: List<Note> = withContext(Dispatchers.IO) {
+                        noteService.getAllNotes()
+                    }
+                    noteServiceMutableLiveData.value = NoteServiceState.Success(response)
+                    noteDatabase.noteDAO().insertNotes(response) // insert notes to db
+                } catch (cancel: CancellationException) {
+                    throw cancel
+                } catch (throwable: Throwable) {
+                    noteServiceMutableLiveData.value = NoteServiceState.Error(throwable)
                 }
-                noteServiceMutableLiveData.value = NoteServiceState.Success(response)
-                noteDatabase.noteDAO().insertNotes(response) // insert notes to db
-            } catch (cancel: CancellationException) {
-                throw cancel
-            } catch (throwable: Throwable) {
-                noteServiceMutableLiveData.value = NoteServiceState.Error(throwable)
+                Log.d("NoteViewModel", "getAllNotesService: ${noteServiceLiveData.value}")
             }
-            Log.d("NoteViewModel", "getAllNotesService: ${noteServiceLiveData.value}")
         }
     }
 
