@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.DiffUtil
 import com.example.noteapp.apiservice.NoteService
 import com.example.noteapp.apiservice.NoteServiceState
 import com.example.noteapp.apiservice.ServiceLocator
@@ -66,7 +67,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (throwable: Throwable) {
-                Log.d("NoteViewModel", "addNote: $throwable")
+                Log.d("NoteViewModel", "updateNote: $throwable")
             }
         }
     }
@@ -78,9 +79,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (throwable: Throwable) {
-                Log.d("NoteViewModel", "addNote: $throwable")
+                Log.d("NoteViewModel", "deleteNote: $throwable")
             }
         }
     }
 }
+
+
 

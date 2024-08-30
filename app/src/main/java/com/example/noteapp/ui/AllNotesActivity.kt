@@ -3,6 +3,7 @@ package com.example.noteapp.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.databinding.ActivityAllNotesBinding
@@ -23,21 +24,38 @@ class AllNotesActivity : AppCompatActivity() {
         }
     })
 
+    private val noteAdapter: NoteAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        NoteAdapter(onNoteCLick = ::onNoteClick)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         viewModel.getAllNotesService() // call api
         viewModel.notesLiveData.observe(this) { notes: List<Note> ->
-            initRecycleView(notes)
+            noteAdapter.submitList(notes)
         }
+        initRecycleView()
     }
 
-    private fun initRecycleView(notes: List<Note>) {
+    private fun initRecycleView() {
         binding.recycleView.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = NoteAdapter(notes)
+            adapter = noteAdapter
+        }
+    }
+
+    private fun onNoteClick(note: Note) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.fragmentContainerView.id, NoteDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("note", note)
+                }
+            })
+            addToBackStack(null)
         }
     }
 }
