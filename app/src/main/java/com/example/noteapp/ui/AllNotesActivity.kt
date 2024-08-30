@@ -13,7 +13,6 @@ import com.example.noteapp.model.Note
 import com.example.noteapp.viewmodel.NoteViewModel
 
 class AllNotesActivity : AppCompatActivity() {
-    // View Binding
     private val binding: ActivityAllNotesBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityAllNotesBinding.inflate(layoutInflater)
     }

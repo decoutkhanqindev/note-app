@@ -26,7 +26,6 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set up password visibility buttons
         passwordHelper.setUpPasswordVisibilityBtn(
             binding.visibilityPasswordBtn1, binding.editPassword
         )
