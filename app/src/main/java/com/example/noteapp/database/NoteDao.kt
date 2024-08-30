@@ -17,7 +17,7 @@ interface NoteDao {
     @Query("SELECT * FROM notes")
     suspend fun getAllNotes(): List<Note>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertNote(note: Note)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

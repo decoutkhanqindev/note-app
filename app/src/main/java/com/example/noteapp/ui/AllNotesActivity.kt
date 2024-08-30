@@ -40,6 +40,10 @@ class AllNotesActivity : AppCompatActivity() {
         initRecycleView()
         handleBackStackToUi(view = binding.addBtn)
         handleBackStackToUi(view = binding.recycleView)
+
+        binding.addBtn.setOnClickListener {
+            moveToAddNoteFragment()
+        }
     }
 
     private fun initRecycleView() {
@@ -58,6 +62,14 @@ class AllNotesActivity : AppCompatActivity() {
                     putSerializable("note", note)
                 }
             })
+            addToBackStack(null)
+        }
+    }
+
+    private fun moveToAddNoteFragment() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.fragmentContainerView.id, AddNoteFragment())
             addToBackStack(null)
         }
     }
