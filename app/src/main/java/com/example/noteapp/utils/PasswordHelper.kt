@@ -23,7 +23,7 @@ class PasswordHelper {
     private fun setUpPasswordVisibilityText(
         button: ImageView, editText: EditText, isVisiblePassword: Boolean
     ) {
-        val imageResource = if (isVisiblePassword) {
+        val imageResource: Int = if (isVisiblePassword) {
             R.drawable.visible_pwd
         } else {
             R.drawable.invisible_pwd
