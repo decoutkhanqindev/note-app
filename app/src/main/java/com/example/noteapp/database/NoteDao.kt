@@ -12,7 +12,7 @@ import com.example.noteapp.model.Note
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM notes")
-    fun observeAllNotes(): MutableLiveData<List<Note>>
+    fun observeAllNotes(): LiveData<List<Note>>
 
     @Query("SELECT * FROM notes")
     fun getAllNotes(): List<Note>
