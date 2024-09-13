@@ -1,5 +1,6 @@
 package com.example.noteapp.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -31,7 +32,9 @@ class NoteDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
-        note = arguments?.getSerializable("note") as? Note
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            note = arguments?.getParcelable("note", Note::class.java)
+        }
         return binding.root
     }
 
