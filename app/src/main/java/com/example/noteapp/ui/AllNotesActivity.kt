@@ -34,8 +34,8 @@ class AllNotesActivity : AppCompatActivity() {
     setContentView(binding.root)
     
     viewModel.notesLiveData.observe(this) { notes: List<Note> ->
-      viewModel.updateNotes(notes)
       noteAdapter.submitList(notes)
+      viewModel.updateNotes(notes)
     }
     initRecycleView()
     handleBackStackToUi(view = binding.addBtn)
