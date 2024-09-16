@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -33,12 +34,15 @@ class NoteDetailFragment : Fragment() {
     }
   })
   
+  @RequiresApi(Build.VERSION_CODES.TIRAMISU)
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View {
     _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      note = arguments?.getParcelable("note", Note::class.java)
+    note = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      arguments?.getParcelable("note", Note::class.java)
+    } else {
+      arguments?.getSerializable("note", Note::class.java)
     }
     return binding.root
   }
@@ -64,13 +68,17 @@ class NoteDetailFragment : Fragment() {
         }
       })
       
-      binding.saveBtn.setOnClickListener {
-        viewModel.updateNote(note = note!!)
-      }
-      
-      binding.deleteBtn.setOnClickListener {
-        viewModel.deleteNote(note = note!!)
-        requireActivity().supportFragmentManager.popBackStack()
+      viewModel.notesLiveData.observe(viewLifecycleOwner) { notes: List<Note> ->
+        binding.saveBtn.setOnClickListener {
+          viewModel.updateNote(note = note!!)
+        }
+        
+        binding.deleteBtn.setOnClickListener {
+          viewModel.deleteNote(note = note!!)
+          requireActivity().supportFragmentManager.popBackStack()
+        }
+        
+        viewModel.updateNotes(notes)
       }
       
       binding.backBtn.setOnClickListener {

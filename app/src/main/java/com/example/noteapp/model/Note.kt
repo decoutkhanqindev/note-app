@@ -10,10 +10,19 @@ import java.io.Serializable
 
 @Entity(tableName = "notes")
 data class Note(
-  @Json(name = "id") @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Int?,
-  @Json(name = "title") @ColumnInfo(name = "title") val title: String?,
-  @ColumnInfo(name = "description") @Json(name = "description") var description: String?
-) : Parcelable {
+  @Json(name = "id")
+  @ColumnInfo(name = "id")
+  @PrimaryKey(autoGenerate = true)
+  val id: Int?,
+  
+  @Json(name = "title")
+  @ColumnInfo(name = "title")
+  val title: String?,
+  
+  @ColumnInfo(name = "description")
+  @Json(name = "description")
+  var description: String?
+) : Parcelable, Serializable {
   
   constructor(parcel: Parcel) : this(
     parcel.readValue(Int::class.java.classLoader) as? Int, parcel.readString(), parcel.readString()

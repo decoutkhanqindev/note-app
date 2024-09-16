@@ -44,7 +44,7 @@ class NoteViewModel(
         if (noteDatabase.noteDAO().observeAllNotes().value == null) {
           noteDatabase.noteDAO().insertNotes(notes) // insert notes to db
         } else {
-          noteDatabase.noteDAO().updateNotes(notes)
+          noteDatabase.noteDAO().updateNotes(notes) // update notes to db
         }
       } catch (cancel: CancellationException) {
         throw cancel
