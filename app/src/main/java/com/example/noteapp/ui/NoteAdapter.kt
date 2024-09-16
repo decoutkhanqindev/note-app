@@ -19,7 +19,7 @@ class NoteAdapter(
       )
     )
   
-  override fun onBindViewHolder(holder: NoteViewHolder, position: Int) =
+  override fun onBindViewHolder(holder: NoteViewHolder, position: Int): Unit =
     holder.bind(note = getItem(position))
   
   inner class NoteViewHolder(private val binding: NoteItemLayoutBinding) :

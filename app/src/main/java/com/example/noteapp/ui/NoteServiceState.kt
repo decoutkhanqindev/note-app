@@ -1,4 +1,4 @@
-package com.example.noteapp.apiservice
+package com.example.noteapp.ui
 
 import com.example.noteapp.model.Note
 

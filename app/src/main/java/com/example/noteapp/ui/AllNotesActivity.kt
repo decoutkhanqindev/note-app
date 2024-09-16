@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.noteapp.AppLocator
 import com.example.noteapp.R
 import com.example.noteapp.databinding.ActivityAllNotesBinding
 import com.example.noteapp.model.Note
@@ -20,7 +21,11 @@ class AllNotesActivity : AppCompatActivity() {
   private val viewModel: NoteViewModel by viewModels<NoteViewModel>(factoryProducer = {
     viewModelFactory {
       addInitializer(clazz = NoteViewModel::class) {
-        NoteViewModel(application = application)
+        NoteViewModel(
+          application = application,
+          noteService = AppLocator.noteService,
+          noteDatabase = AppLocator.getDBInstance(application)
+        )
       }
     }
   })
@@ -35,7 +40,7 @@ class AllNotesActivity : AppCompatActivity() {
     
     viewModel.notesLiveData.observe(this) { notes: List<Note> ->
       noteAdapter.submitList(notes)
-      viewModel.updateNotes(notes)
+//      viewModel.updateNotes(notes)
     }
     initRecycleView()
     handleBackStackToUi(view = binding.addBtn)
