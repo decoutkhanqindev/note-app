@@ -68,17 +68,13 @@ class NoteDetailFragment : Fragment() {
         }
       })
       
-      viewModel.notesLiveData.observe(viewLifecycleOwner) { notes: List<Note> ->
-        binding.saveBtn.setOnClickListener {
-          viewModel.updateNote(note = note!!)
-        }
-        
-        binding.deleteBtn.setOnClickListener {
-          viewModel.deleteNote(note = note!!)
-          requireActivity().supportFragmentManager.popBackStack()
-        }
-        
-        viewModel.updateNotes(notes)
+      binding.saveBtn.setOnClickListener {
+        viewModel.updateNote(note = note!!)
+      }
+      
+      binding.deleteBtn.setOnClickListener {
+        viewModel.deleteNote(note = note!!)
+        requireActivity().supportFragmentManager.popBackStack()
       }
       
       binding.backBtn.setOnClickListener {

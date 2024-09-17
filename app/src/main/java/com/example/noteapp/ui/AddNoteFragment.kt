@@ -38,21 +38,17 @@ class AddNoteFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     
-    viewModel.notesLiveData.observe(viewLifecycleOwner) { notes: List<Note> ->
-      binding.saveBtn.setOnClickListener {
-        if (binding.editTitleNote.text.toString().isNotEmpty()) {
-          viewModel.insertNote(
-            Note(
-              id = System.currentTimeMillis().toInt(),
-              title = binding.editTitleNote.text.toString(),
-              description = binding.editDescriptionNote.text.toString()
-            )
+    binding.saveBtn.setOnClickListener {
+      if (binding.editTitleNote.text.toString().isNotEmpty()) {
+        viewModel.insertNote(
+          Note(
+            id = System.currentTimeMillis().toInt(),
+            title = binding.editTitleNote.text.toString(),
+            description = binding.editDescriptionNote.text.toString()
           )
-        }
-        requireActivity().supportFragmentManager.popBackStack()
+        )
       }
-      
-      viewModel.updateNotes(notes)
+      requireActivity().supportFragmentManager.popBackStack()
     }
     
     binding.backBtn.setOnClickListener {

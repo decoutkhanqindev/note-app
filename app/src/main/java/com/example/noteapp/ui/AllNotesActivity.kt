@@ -41,10 +41,8 @@ class AllNotesActivity : AppCompatActivity() {
     viewModel.getAllNotesService()
     
     viewModel.notesLiveData.observe(this) { notes: List<Note> ->
+      handleEmptyState(notes = notes)
       noteAdapter.submitList(notes)
-      if (notes.isEmpty()) {
-        binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
-      }
     }
     
     initRecycleView()
@@ -59,6 +57,14 @@ class AllNotesActivity : AppCompatActivity() {
       setHasFixedSize(true)
       layoutManager = LinearLayoutManager(context)
       adapter = noteAdapter
+    }
+  }
+  
+  private fun handleEmptyState(notes: List<Note>) {
+    if (notes.isEmpty()) {
+      binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
+    } else {
+      binding.emptyRecycleView.isVisible = false
     }
   }
   

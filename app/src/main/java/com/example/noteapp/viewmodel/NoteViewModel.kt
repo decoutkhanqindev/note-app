@@ -11,6 +11,7 @@ import com.example.noteapp.database.NoteDatabase
 import com.example.noteapp.model.Note
 import com.example.noteapp.ui.NoteServiceState
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NoteViewModel(
@@ -26,25 +27,26 @@ class NoteViewModel(
   val notesLiveData: LiveData<List<Note>> = noteDatabase.noteDAO().observeAllNotes()
   
   // get all notes from api
+  // LiveData updates should happen on the main thread. Using postValue() ensures that.
   fun getAllNotesService() {
-    viewModelScope.launch {
-      _apiState.value = NoteServiceState.Loading
-      
+    viewModelScope.launch(Dispatchers.IO) {
+      _apiState.postValue(NoteServiceState.Loading)
       try {
         val notes: List<Note> = noteService.getAllNotes()
-        _apiState.value = NoteServiceState.Success(notes)
+        _apiState.postValue(NoteServiceState.Success(notes = notes))
         
         if (notesLiveData.value.isNullOrEmpty()) {
-          noteDatabase.noteDAO().insertNotes(notes)
+          noteDatabase.noteDAO().insertNotes(notes = notes)
         }
       } catch (cancel: CancellationException) {
         throw cancel
       } catch (throwable: Throwable) {
-        _apiState.value = NoteServiceState.Error(throwable)
+        _apiState.postValue(NoteServiceState.Error(throwable = throwable))
       }
     }
     Log.d("NoteViewModel", "getAllNotesService: ${apiState.value}")
   }
+  
   
   fun insertNote(note: Note) {
     viewModelScope.launch {
