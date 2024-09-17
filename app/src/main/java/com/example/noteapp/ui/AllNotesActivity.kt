@@ -39,18 +39,18 @@ class AllNotesActivity : AppCompatActivity() {
     setContentView(binding.root)
     
     viewModel.getAllNotesService()
-    
+    bindViewModel()
+    initRecycleView()
+    binding.addBtn.setOnClickListener { moveToAddNoteFragment() }
+    supportFragmentManager.addOnBackStackChangedListener { handleBackStackToUi() }
+  }
+  
+  private fun bindViewModel() {
     viewModel.notesLiveData.observe(this) { notes: List<Note> ->
       viewModel.updateNotes(notes = notes)
       noteAdapter.submitList(notes)
       handleEmptyState(notes = notes)
     }
-    
-    initRecycleView()
-    
-    binding.addBtn.setOnClickListener { moveToAddNoteFragment() }
-    
-    supportFragmentManager.addOnBackStackChangedListener { handleBackStackToUi() }
   }
   
   private fun initRecycleView() {
