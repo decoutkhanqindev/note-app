@@ -1,9 +1,9 @@
 package com.example.noteapp.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,17 +38,20 @@ class AllNotesActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(binding.root)
     
+    viewModel.getAllNotesService()
+    
     viewModel.notesLiveData.observe(this) { notes: List<Note> ->
       noteAdapter.submitList(notes)
-//      viewModel.updateNotes(notes)
+      if (notes.isEmpty()) {
+        binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
+      }
     }
-    initRecycleView()
-    handleBackStackToUi(view = binding.addBtn)
-    handleBackStackToUi(view = binding.recycleView)
     
-    binding.addBtn.setOnClickListener {
-      moveToAddNoteFragment()
-    }
+    initRecycleView()
+    
+    binding.addBtn.setOnClickListener { moveToAddNoteFragment() }
+    
+    supportFragmentManager.addOnBackStackChangedListener { handleBackStackToUi() }
   }
   
   private fun initRecycleView() {
@@ -63,9 +66,7 @@ class AllNotesActivity : AppCompatActivity() {
     supportFragmentManager.commit {
       setReorderingAllowed(true)
       replace(binding.fragmentContainerView.id, NoteDetailFragment().apply {
-        arguments = Bundle().apply {
-          putParcelable("note", note)
-        }
+        arguments = Bundle().apply { putParcelable("note", note) }
       })
       addToBackStack(null)
     }
@@ -79,16 +80,15 @@ class AllNotesActivity : AppCompatActivity() {
     }
   }
   
-  private fun handleBackStackToUi(view: View) {
-    supportFragmentManager.addOnBackStackChangedListener {
-      if (supportFragmentManager.backStackEntryCount == 0) {
-        view.visibility = View.VISIBLE
-      } else {
-        view.visibility = View.GONE
-      }
-      if (noteAdapter.itemCount == 0) {
-        binding.emptyRecycleView.setImageResource(R.drawable.undraw_empty_xct9_1)
-      }
+  private fun handleBackStackToUi() {
+    if (supportFragmentManager.backStackEntryCount == 0) {
+      binding.addBtn.isVisible = true
+      binding.recycleView.isVisible = true
+      binding.emptyRecycleView.isVisible = true
+    } else {
+      binding.addBtn.isVisible = false
+      binding.recycleView.isVisible = false
+      binding.emptyRecycleView.isVisible = false
     }
   }
 }

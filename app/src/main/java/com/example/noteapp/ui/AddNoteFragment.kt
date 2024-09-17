@@ -40,9 +40,7 @@ class AddNoteFragment : Fragment() {
     
     viewModel.notesLiveData.observe(viewLifecycleOwner) { notes: List<Note> ->
       binding.saveBtn.setOnClickListener {
-        if (binding.editTitleNote.text.toString()
-            .isNotEmpty() && binding.editDescriptionNote.text.toString().isNotEmpty()
-        ) {
+        if (binding.editTitleNote.text.toString().isNotEmpty()) {
           viewModel.insertNote(
             Note(
               id = System.currentTimeMillis().toInt(),

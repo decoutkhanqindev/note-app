@@ -7,13 +7,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.noteapp.apiservice.NoteService
-import com.example.noteapp.ui.NoteServiceState
 import com.example.noteapp.database.NoteDatabase
 import com.example.noteapp.model.Note
+import com.example.noteapp.ui.NoteServiceState
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class NoteViewModel(
   application: Application,
@@ -21,38 +19,31 @@ class NoteViewModel(
   private val noteDatabase: NoteDatabase
 ) : AndroidViewModel(application) {
   // api
-  private val noteServiceMutableLiveData: MutableLiveData<NoteServiceState> =
-    MutableLiveData<NoteServiceState>()
-  private val noteServiceLiveData: LiveData<NoteServiceState> get() = noteServiceMutableLiveData
+  private val _apiState: MutableLiveData<NoteServiceState> = MutableLiveData<NoteServiceState>()
+  private val apiState: LiveData<NoteServiceState> get() = _apiState
   
   // db
   val notesLiveData: LiveData<List<Note>> = noteDatabase.noteDAO().observeAllNotes()
   
-  init {
-    getAllNotesService()
-  }
-  
   // get all notes from api
-  private fun getAllNotesService() {
-    noteServiceMutableLiveData.value = NoteServiceState.Loading
+  fun getAllNotesService() {
     viewModelScope.launch {
+      _apiState.value = NoteServiceState.Loading
+      
       try {
-        val notes: List<Note> = withContext(Dispatchers.IO) {
-          noteService.getAllNotes()
-        }
-        noteServiceMutableLiveData.value = NoteServiceState.Success(notes)
-        if (noteDatabase.noteDAO().observeAllNotes().value == null) {
-          noteDatabase.noteDAO().insertNotes(notes) // insert notes to db
-        } else {
-          noteDatabase.noteDAO().updateNotes(notes) // update notes to db
+        val notes: List<Note> = noteService.getAllNotes()
+        _apiState.value = NoteServiceState.Success(notes)
+        
+        if (notesLiveData.value.isNullOrEmpty()) {
+          noteDatabase.noteDAO().insertNotes(notes)
         }
       } catch (cancel: CancellationException) {
         throw cancel
       } catch (throwable: Throwable) {
-        noteServiceMutableLiveData.value = NoteServiceState.Error(throwable)
+        _apiState.value = NoteServiceState.Error(throwable)
       }
-      Log.d("NoteViewModel", "getAllNotesService: ${noteServiceLiveData.value}")
     }
+    Log.d("NoteViewModel", "getAllNotesService: ${apiState.value}")
   }
   
   fun insertNote(note: Note) {
