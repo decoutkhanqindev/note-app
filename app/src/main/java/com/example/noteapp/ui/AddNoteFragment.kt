@@ -42,7 +42,7 @@ class AddNoteFragment : Fragment() {
       if (binding.editTitleNote.text.toString().isNotEmpty()) {
         viewModel.insertNote(
           Note(
-            id = System.currentTimeMillis().toInt(),
+            id = System.currentTimeMillis(),
             title = binding.editTitleNote.text.toString(),
             description = binding.editDescriptionNote.text.toString()
           )

@@ -13,7 +13,7 @@ data class Note(
   @Json(name = "id")
   @ColumnInfo(name = "id")
   @PrimaryKey(autoGenerate = true)
-  val id: Int?,
+  val id: Long?,
   
   @Json(name = "title")
   @ColumnInfo(name = "title")
@@ -25,7 +25,7 @@ data class Note(
 ) : Parcelable, Serializable {
   
   constructor(parcel: Parcel) : this(
-    parcel.readValue(Int::class.java.classLoader) as? Int, parcel.readString(), parcel.readString()
+    parcel.readValue(Int::class.java.classLoader) as? Long, parcel.readString(), parcel.readString()
   )
   
   override fun writeToParcel(parcel: Parcel, flags: Int) {

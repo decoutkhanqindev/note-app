@@ -47,11 +47,22 @@ class NoteViewModel(
     Log.d("NoteViewModel", "getAllNotesService: ${apiState.value}")
   }
   
-  
   fun insertNote(note: Note) {
     viewModelScope.launch {
       try {
         noteDatabase.noteDAO().insertNote(note)
+      } catch (cancel: CancellationException) {
+        throw cancel
+      } catch (throwable: Throwable) {
+        Log.d("NoteViewModel", "insertNote: $throwable")
+      }
+    }
+  }
+  
+  fun insertNotes(notes: List<Note>) {
+    viewModelScope.launch {
+      try {
+        noteDatabase.noteDAO().insertNotes(notes)
       } catch (cancel: CancellationException) {
         throw cancel
       } catch (throwable: Throwable) {

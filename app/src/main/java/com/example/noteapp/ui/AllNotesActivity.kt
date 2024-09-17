@@ -41,8 +41,9 @@ class AllNotesActivity : AppCompatActivity() {
     viewModel.getAllNotesService()
     
     viewModel.notesLiveData.observe(this) { notes: List<Note> ->
-      handleEmptyState(notes = notes)
+      viewModel.updateNotes(notes = notes)
       noteAdapter.submitList(notes)
+      handleEmptyState(notes = notes)
     }
     
     initRecycleView()
